@@ -10,11 +10,19 @@
 
 <table class="table table-striped" id="list_table">
 	<tbody>
-		<tr>
-			<td class="table_wideCell">aaaaaaaa</td>
+<!--		<tr th:if="${{id}=(id=*{id})}" th:each="content : ${userlist}" th:object="${content}" class="align-middle">-->
+	<tr th:if="${content.user_id == 1}" th:each="content : ${userlist}" th:object="${content}" class="align-middle">
+			<td class="table_wideCell" th:text="*{content}"></td>
 			<td>
-				<input class="btn_img" type="image" th:src="@{/img/pen.jpeg}" name="edit_clip" alt="画像">
-				<input class="btn_img" type="image" th:src="@{/img/trash.jpeg}" name="edit_clip" alt="画像">
+				<form>
+					<input class="btn_img" type="image" th:src="@{/img/pen.jpeg}" alt="画像">
+					
+					<a th:href="@{/user/{id}/delete(id=*{id})}"   >
+						<img src="/img/trash.jpeg"  alt="画像" class="btn_img">
+						</a>
+					
+				</form>
+
 			</td>
 		</tr>
 	</tbody>

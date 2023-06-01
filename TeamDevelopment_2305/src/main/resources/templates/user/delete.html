@@ -12,10 +12,12 @@
 	</div>
 	<h1>削除</h1>
 	
-	<form class="edit_form">
+	<form class="edit_form" method="post" th:href="@{/user/{id}/delete/delte_content(id=*{id})}">
 		<div class="edit_editerea del_editerea">
 			<p class="del_check">本当に削除しますか？</p>
-			<textarea readonly class="del_textarea" name="edit" rows="10" >入力した内容を表示</textarea>
+			<textarea readonly class="del_textarea" name="edit" rows="10" th:object="${editForm}"　th:field="*{content}">
+				
+			</textarea>
 		</div>
 
 		<div class="btn">

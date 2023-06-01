@@ -1,13 +1,18 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-//import com.example.demo.dto.UserRequest;
-//import com.example.demo.dto.UserUpdateRequest;
-//import com.example.demo.entity.UserEntity;
-//import com.example.demo.service.UserService;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserUpdateRequest;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.service.UserService;
 
 
 
@@ -21,17 +26,28 @@ public class UserController {
 	 * ユーザー情報 Service
 	 */
 	@Autowired
-	//UserService userService;
+	UserService userService;
 
 	/**
-	 * ユーザー情報一覧画面を表示
+	 * ユーザー一覧画面を表示
 	 * @param model Model
-	 * @return ユーザー情報一覧画面のHTML
+	 * @return ユーザー一覧画面のHTML
 	 */
-	@RequestMapping("/user/list")
-	public String displayList() {
+	@GetMapping("/user/{id}")
+	public String displayList(@PathVariable Integer id, Model model) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT content From posts WHERE user_id= ");
+		sql.append(id);
+//		List<UserEntity> userlist= sql.getResultList();
+//		UserEntity user = userService.findById(id);
 //		List<UserEntity> userlist = userService.searchAll();
-//		model.addAttribute("userlist", userlist);
+		//情報を入力
+		//UserEntity userlist = userService.findByUser_Id(id);
+		//model.addAttribute("userlist", user);
+		
+		List<UserEntity> userlist = userService.searchAll();
+		model.addAttribute("userlist", userlist);
+		model.addAttribute("userlist", userlist);
 		return "user/list";
 	}
 	/**
@@ -87,17 +103,15 @@ public class UserController {
 	 * @param model Model
 	 * @return ユーザー編集画面
 	 */
-//	@GetMapping("/user/{id}/edit")
-//	public String displayEdit(@PathVariable Integer id, Model model) {
-//		UserEntity user = userService.findById(id);
-//		UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
-//		userUpdateRequest.setId(user.getId());
-//		userUpdateRequest.setName(user.getName());
-//		userUpdateRequest.setPhone(user.getPhone());
-//		userUpdateRequest.setAddress(user.getAddress());
-//		model.addAttribute("userUpdateRequest", userUpdateRequest);
-//		return "user/edit";
-//	}
+	@GetMapping("/user/{id}/edit")
+	public String displayEdit(@PathVariable Integer id, Model model) {
+		UserEntity user = userService.findById(id);
+		UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+		userUpdateRequest.setId(user.getId());
+		//UserUpdateRequest.setContent(user.getContent());
+		model.addAttribute("userUpdateRequest", userUpdateRequest);
+		return "user/edit";
+	}
 	/**
 	 * ユーザー更新
 	 * @param userRequest リクエストデータ
@@ -145,11 +159,23 @@ public class UserController {
 //		userService.delete(id);
 //		return "redirect:/user/list";
 //	}
-	@RequestMapping("/user/delete")
-//	public String displayAdd(Model model) {
-	public String displayDelete() {
-//		model.addAttribute("userRequest", new UserRequest());
-		return "user/delete";
+	@GetMapping("/user/{id}/delete/delte_content")
+	public String delete(UserRequest userRequest,Model model){
+		userService.delete(userRequest.getId());
+		return "/user/list";
 	}
+	
+	
+	//@PathVariableを追加した
+	@GetMapping("/user/{id}/delete")
+	public String displaydelete(@PathVariable Integer id, Model model) {
+		  UserEntity editEntity = userService.findByUser_Id(id);
+		  UserRequest editForm = new UserRequest();
+		  editForm.setId(editEntity.getId());
+		  editForm.setContent(editEntity.getContent());
+		  model.addAttribute("editForm", editForm);
+		return "/user/delete";
+	}
+	//}
 }
 
