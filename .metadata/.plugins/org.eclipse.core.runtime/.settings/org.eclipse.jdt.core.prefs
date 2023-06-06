@@ -1,5 +1,8 @@
 eclipse.preferences.version=1
 org.eclipse.jdt.core.builder.resourceCopyExclusionFilter=*.launch
+org.eclipse.jdt.core.classpathVariable.JRE_LIB=/Applications/Eclipse_2023-03.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/lib/jrt-fs.jar
+org.eclipse.jdt.core.classpathVariable.JRE_SRC=/Applications/Eclipse_2023-03.app/Contents/Eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_17.0.7.v20230425-1502/jre/lib/src.zip
+org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
 org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=17
@@ -48,6 +51,7 @@ org.eclipse.jdt.core.formatter.alignment_for_multiplicative_operator=16
 org.eclipse.jdt.core.formatter.alignment_for_parameterized_type_references=0
 org.eclipse.jdt.core.formatter.alignment_for_parameters_in_constructor_declaration=16
 org.eclipse.jdt.core.formatter.alignment_for_parameters_in_method_declaration=16
+org.eclipse.jdt.core.formatter.alignment_for_permitted_types_in_type_declaration=16
 org.eclipse.jdt.core.formatter.alignment_for_record_components=16
 org.eclipse.jdt.core.formatter.alignment_for_relational_operator=0
 org.eclipse.jdt.core.formatter.alignment_for_resources_in_try=80
