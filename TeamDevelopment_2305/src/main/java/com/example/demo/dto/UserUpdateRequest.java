@@ -2,7 +2,8 @@ package com.example.demo.dto;
 
 import java.io.Serializable;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,7 +18,15 @@ public class UserUpdateRequest extends UserRequest implements Serializable {
   /**
    * ユーザーID
    */
-  @NotNull
-  private Integer id;
+	@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY) //登録する際に連番をつける
+	@Column(name = "id")
+	private Integer id;
+  
+	/**
+	 * 投稿内容
+	 */
+	@Column(name = "edit")
+	private String edit;
 
 }

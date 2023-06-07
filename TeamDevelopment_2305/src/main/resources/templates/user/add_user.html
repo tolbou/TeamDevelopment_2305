@@ -6,46 +6,45 @@
 
 
 <body>
-	
-	
-	test!
 
 	<div class="container">
-		<!--    <div th:if="${validationError}" th:each="error : ${validationError}">-->
-		<!--      <label class="text-danger" th:text="${error}"></label>-->
+		    <div th:if="${validationError}" th:each="error : ${validationError}">
+		      <label class="text-danger" th:text="${error}"></label>
 	</div>
 	
 	<div id="errorMessage"></div>
 	<h1>ユーザー新規登録</h1>
 
 	<div class="box_con">
-		<form method="post">
+		<form method="post" th:action="@{/user/create}" th:object="${add_userRequest}">
 			<table class="formTable">
 				<tr>
 					<th>ユーザーネーム</th>
 					<!--        <input type="text" th:field="*{name}" class="form-control">-->
-					<td><input type="text" required></td>
+					<td><input type="text" th:field="*{username}" required></td>
 				</tr>
 				<tr>
 					<th>メールアドレス</th>
 					<!--        <input type="text" th:field="*{name}" class="form-control">-->
 
-					<td><input type="email" required></td>
+					<td><input type="email" th:field="*{email}" required></td>
 				</tr>
 				<tr>
 					<th>パスワード</th>
 
 					<!--        <input type="text" th:field="*{phone}" class="form-control">-->
-					<td><input type="password" name="password" required></td>
+					<td><input type="password" th:field="*{password}" name="password" required></td>
 				</tr>
-				<tr>
-					<th>パスワード(確認用)</th>
-					<td><input type="password" name="passwordConfirm" required></td>
-				</tr>
+<!--	★余裕があれば			<tr>-->
+<!--					<th>パスワード(確認用)</th>-->
+<!--					<td><input type="password" name="passwordConfirm" required></td>-->
+<!--				</tr>-->
 			</table>
 			
 			<div class="btn">
+				<a href="#" onclick="history.back(-1);return false;">
 				<input class="add_cancel_btn" type="submit" value="キャンセル" />
+				</a>
 				<input class="add_regi_btn" type="submit" value="　 登録 　" />
 			</div>
 			
