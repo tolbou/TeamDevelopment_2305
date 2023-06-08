@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.dto.Add_userRequest;
+import com.example.demo.dto.Re_CommentsRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepository;
@@ -73,16 +74,8 @@ public class UserController {
 	public String displayAdd(@Validated @ModelAttribute Add_userRequest add_userRequest, BindingResult result,
 			Model model) {
 		//入力されたものの箱を用意
-		model.addAttribute("Add_userRequest", new Add_userRequest());
-		//				if (result.hasErrors()) {
-		//					// 入力チェックエラーの場合
-		//					List<String> errorList = new ArrayList<String>();
-		//					for (ObjectError error : result.getAllErrors()) {
-		//						errorList.add(error.getDefaultMessage());
-		//					}
-		//					model.addAttribute("validationError", errorList);
-		//					return "user/add_user";
-		//				}
+		model.addAttribute("add_userRequest", new Add_userRequest());
+
 		return "user/add_user";
 	}
 
@@ -110,71 +103,32 @@ public class UserController {
 		return "redirect:/user/2";
 	}
 
-	/**
-	 * ユーザー情報詳細画面を表示
-	 * @param id 表示するユーザーID
-	 * @param model Model
-	 * @return ユーザー情報詳細画面
-	 */
-	//	@GetMapping("/user/{id}")
-	//	public String displayView(@PathVariable Integer id, Model model) {
-	//		UserEntity user = userService.findById(id);
-	//		model.addAttribute("userData", user);
-	//		return "user/view";
-	//
-	//	}
-	/**
-	 * ユーザー編集画面を表示
-	 * @param id 表示するユーザーID
-	 * @param model Model
-	 * @return ユーザー編集画面
-	 */
-
-	//	@GetMapping("/user/{id}/edit")
-	//	public String displayEdit(@PathVariable Integer id, Model model) {
-	//		UserEntity user = userService.findById(id);
-	//		UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
-	//		userUpdateRequest.setId(user.getId());
-	//		//UserUpdateRequest.setContent(user.getContent());
-	//		model.addAttribute("userUpdateRequest", userUpdateRequest);
-	//		return "user/edit";
-	//	}
-	/**
-	 * ユーザー更新
-	 * @param userRequest リクエストデータ
-	 * @param model Model
-	 * @return ユーザー情報詳細画面
-	 */
-	//	@RequestMapping("/user/update")
-	//	public String update(@Validated @ModelAttribute UserUpdateRequest userUpdateRequest, BindingResult result, Model model) {
-	//		if (result.hasErrors()) {
-	//			List<String> errorList = new ArrayList<String>();
-	//			for (ObjectError error : result.getAllErrors()) {
-	//				errorList.add(error.getDefaultMessage());
-	//			}
-	//			model.addAttribute("validationError", errorList);
-	//			return "user/edit";
-	//		}
-	//		// ユーザー情報の更新
-	//		userService.update(userUpdateRequest);
-	//		return String.format("redirect:/user/%d", userUpdateRequest.getId());
-	//	}
 
 	//返信画面
 	@RequestMapping("/user/reply")
 	//	public String displayAdd(Model model) {
-	public String displayReply() {
-		//		model.addAttribute("userRequest", new UserRequest());
+	public String displayReply(@Validated @ModelAttribute Re_CommentsRequest re_commentsRequest, BindingResult result,
+			Model model,Model comentModel) {
+		
+		UserEntity editEntity = userService.findById(3); //返信するものを取得
+		UserRequest editForm = new UserRequest();
+		editForm.setId(editEntity.getId()); //IDを取得
+		editForm.setContent(editEntity.getContent()); //コンテンツを取得
+		model.addAttribute("post_contet", editForm); //取得したものをページに渡す
+		//入れるものの箱
+		comentModel.addAttribute("re_commentsRequest", new Re_CommentsRequest());
+		
 		return "user/reply";
 	}
 	
 	
 	//返信ボタン
-	@RequestMapping("/reply/{id}")
+	@RequestMapping("/reply/3")
 	//	public String displayAdd(Model model) {
-	public String reply() {
-		//		model.addAttribute("userRequest", new UserRequest());
-		return "redirect:/user/{id}";
+	public String reply(@Validated @ModelAttribute Re_CommentsRequest re_commentsRequest,Model model) {
+		userService.reply(re_commentsRequest);
+
+		return "redirect:/user/2";
 	}
 
 	/**

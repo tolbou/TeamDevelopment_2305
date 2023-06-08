@@ -26,30 +26,28 @@ public class Re_CommentsEntity implements Serializable {
 	private Integer id;
 	
 	@Column(name = "user_id")
-	private String user_id;
+	private Integer user_id;
 
-	/**
-	 * 投稿内容
-	 */
+
 	@Column(name = "post_id")
-	private String post_id;
+	private Integer post_id;
 	
 	
 	
 	@Column(name = "content")
-	private String password;
+	private String content;
 
 
 	/**
 	 * 登録日時
 	 */
 	@Column(name = "created_at")
-	private Date createDate;
+	private Date created_at;
 	
 	/**
 	 * 更新日時
 	 */
 	@Column(name = "updated_at")
-	private Date updateDate;
+	private Date updated_at;
 	
 }

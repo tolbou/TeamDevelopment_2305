@@ -11,10 +11,9 @@
 	</div>
 	<h1>編集</h1>
 
-	<!--アクションとメソッド入れたよ POSTはだめって怒られるから抜いたよ-->
 	<form class="edit_form" th:action="@{/update/{id}(id=*{id})}" method="post">
 		<div class="edit_editerea">
-			<textarea class="edit_textarea" name="edit" rows="10" th:object="${editForm}" 　th:field="*{content}">
+			<textarea class="edit_textarea" name="edit" rows="10" th:object="${editForm}" th:field="*{content}">
 			</textarea>
 			<input type="hidden" name="id" th:value="${editForm.id}" />
 

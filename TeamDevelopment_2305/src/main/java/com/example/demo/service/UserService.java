@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.Add_userRequest;
+import com.example.demo.dto.Re_CommentsRequest;
 import com.example.demo.dto.UserRequest;
 import com.example.demo.entity.Add_userEntity;
+import com.example.demo.entity.Re_CommentsEntity;
 //import com.example.demo.dto.UserUpdateRequest;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.Add_userRepository;
+import com.example.demo.repository.Re_CommentsRepository;
 import com.example.demo.repository.UserRepository;
 
 /**
@@ -28,6 +31,8 @@ public class UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private Add_userRepository add_userRepository;
+	@Autowired
+	private Re_CommentsRepository re_commentsRepository;
 
 	/**
 	 * ユーザー情報 全検索
@@ -52,14 +57,21 @@ public class UserService {
 		return userRepository.findById(user_id).get();
 	}
 	
+	//返信用テーブルに保存
+	public void reply(Re_CommentsRequest re_commentsRequest) {
+		Date now = new Date();
+		Re_CommentsEntity reply = new Re_CommentsEntity();
+		reply.setId(re_commentsRequest.getId());
+		reply.setUser_id(2);
+		reply.setPost_id(3);
+		reply.setContent(re_commentsRequest.getContent());
+		reply.setCreated_at(now);
+		reply.setUpdated_at(now);
+		re_commentsRepository.save(reply);
+	}
 	
-	//1ユーザーの投稿だけ取得したい
-	//@Autowired
-//	public List<UserEntity> getList(String userName) {
-//	  List<UserEntity> list = userRepository.findAll(Specification
-//	    .where(userRepository.userNameContains(userName)));
-//	    // 複数項目の場合は.and(),.or()でつなげる
-//	}
+	
+
 
 	/**
 	 * ユーザー情報 新規登録
