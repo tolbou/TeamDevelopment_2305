@@ -39,7 +39,7 @@ public class UserlistEntity implements Serializable {
    * 作成
    */
   @Column(name = "created_at")
-  private String created_at;
+  private Date createDate;
   /**
    * 更新日時
    */

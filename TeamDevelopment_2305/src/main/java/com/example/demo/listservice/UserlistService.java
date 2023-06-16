@@ -34,6 +34,7 @@ public class UserlistService {
    * @param keyword 検索キーワード
    * @return 検索結果リスト
    */
+ 
   public List<UserlistEntity> searchByKeyword(String keyword) {
     return userlistRepository.findByContentContaining(keyword);
   }
