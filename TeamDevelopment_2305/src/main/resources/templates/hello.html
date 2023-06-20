@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<title>Login Success</title>
+    <style>
+body {
+	font-family: Arial, sans-serif;
+	text-align: center;
+	padding-top: 100px;
+}
+
+h1 {
+	color: #2ecc71;
+}
+</style>
+</head>
+
+
+<body>
+    <h1>Login Successful!</h1>
+    <p>You have successfully logged in.</p>
+    <form th:action="@{/login}" method="post">
+    
+    </form>
+</body>
+</html>

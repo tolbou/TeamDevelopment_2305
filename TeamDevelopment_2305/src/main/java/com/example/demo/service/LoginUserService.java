@@ -18,23 +18,25 @@ import com.example.demo.repository.LoginUserRepository;
 public class LoginUserService implements UserDetailsService {
 
 	@Autowired
-	private LoginUserRepository LoginUserRepository;
+	private LoginUserRepository loginUserRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		//メールアドレスによりユーザーを検索
-		LoginUserEntity userEntity = LoginUserRepository.findByEmail(email);
-		//バリデーションチェック　本記事の趣旨とは異なるので実装の詳しい説明は省略。
+		// メールアドレスによりユーザーを検索
+		LoginUserEntity userEntity = loginUserRepository.findByEmail(email);
+		
 		if (userEntity == null) {
-			throw new UsernameNotFoundException("そのEmaiは登録されていません");
+			throw new UsernameNotFoundException("そのEmailは登録されていません");
 		}
-		//権限情報を格納するためのリストの作成、権限の付与
+		
+		// 権限情報を格納するためのリストの作成、権限の付与
 		Collection<GrantedAuthority> authorityList = new ArrayList<>();
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
-		//		if(member.isAdmin()) {
-		//		authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 管理者権限付与
-		//	}
-		//ログインユーザーのコンストラクタを使用してインスタンスを生成する。
-		return (UserDetails) new LoginUserEntity();
+
+		return new org.springframework.security.core.userdetails.User(
+				userEntity.getEmail(),
+				userEntity.getPassword(),
+				authorityList
+		);
 	}
 }
