@@ -43,11 +43,7 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-	/**
-	 * ユーザー一覧画面を表示
-	 * @param model Model
-	 * @return ユーザー一覧画面のHTML
-	 */
+	//MY画面を表示
 	@GetMapping("/user/{id}")
 	public String displayList(@PathVariable Integer id, Model model) {
 
@@ -79,12 +75,7 @@ public class UserController {
 		return "user/add_user";
 	}
 
-	/**
-	 * ユーザー新規登録
-	 * @param userRequest リクエストデータ
-	 * @param model Model
-	 * @return ユーザー情報一覧画面
-	 */
+	//登録ボタンを押したら
 	@PostMapping("/user/create")
 	public String create(@Validated @ModelAttribute Add_userRequest add_userRequest, BindingResult result,
 			Model model) {
@@ -106,23 +97,37 @@ public class UserController {
 
 	//返信画面
 	@RequestMapping("/user/reply")
-	//	public String displayAdd(Model model) {
-	public String displayReply(@Validated @ModelAttribute Re_CommentsRequest re_commentsRequest, BindingResult result,
+	public String displayReply(@Validated @ModelAttribute("re_content") Re_CommentsRequest re_commentsRequest, 
+			BindingResult result,
 			Model model,Model comentModel) {
-		
+
 		UserEntity editEntity = userService.findById(3); //返信するものを取得
 		UserRequest editForm = new UserRequest();
 		editForm.setId(editEntity.getId()); //IDを取得
 		editForm.setContent(editEntity.getContent()); //コンテンツを取得
-		model.addAttribute("post_contet", editForm); //取得したものをページに渡す
+		model.addAttribute("editForm", editForm); //取得したものをページに渡す
 		//入れるものの箱
 		comentModel.addAttribute("re_commentsRequest", new Re_CommentsRequest());
-		
 		return "user/reply";
 	}
+	//	public String displayAdd(Model model) {
+//	public String displayReply(@Validated @ModelAttribute Re_CommentsRequest re_commentsRequest, BindingResult result,
+//			Model model,Model comentModel) {
+//		
+//		UserEntity editEntity = userService.findById(3); //返信するものを取得
+//		UserRequest editForm = new UserRequest();
+//		editForm.setId(editEntity.getId()); //IDを取得
+//		editForm.setContent(editEntity.getContent()); //コンテンツを取得
+//		model.addAttribute("post_contet", editForm); //取得したものをページに渡す
+//		//入れるものの箱
+//		comentModel.addAttribute("re_commentsRequest", new Re_CommentsRequest());
+//		
+//		return "user/reply";
+//	}
 	
 	
-	//返信ボタン
+	
+	//返信ボタンを押したら
 	@RequestMapping("/reply/3")
 	//	public String displayAdd(Model model) {
 	public String reply(@Validated @ModelAttribute Re_CommentsRequest re_commentsRequest,Model model) {

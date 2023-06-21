@@ -12,9 +12,9 @@
 	
 	<h1>返信</h1>
 	
-	<form class="edit_form" th:object="${post_contet}">
+	<form class="edit_form">
 		<div class="edit_editerea reply_editerea">
-			<textarea readonly class="edit_textarea" name="edit" rows="10" tth:field="*{post_contet.content}">
+			<textarea readonly class="edit_textarea" name="edit" rows="10" >[[${editForm.content}]]
 				</textarea>
 		</div>
 
