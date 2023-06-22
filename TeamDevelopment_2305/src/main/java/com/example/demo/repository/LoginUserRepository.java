@@ -1,8 +1,7 @@
 package com.example.demo.repository;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,17 +15,16 @@ public class LoginUserRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
-	private static final String SELECT_USER_BY_EMAIL = "SELECT email, password FROM users WHERE email = :email";
+	private static final String SELECT_USER_BY_EMAIL = "SELECT email, password, username FROM users WHERE email = :email";
 	private static final BeanPropertyRowMapper<LoginUserEntity> USER_ROW_MAPPER = BeanPropertyRowMapper.newInstance(LoginUserEntity.class);
 
 	public LoginUserEntity findByEmail(String email) {
-		SqlParameterSource param = new MapSqlParameterSource("email", email);
-		List<LoginUserEntity> userList = template.query(SELECT_USER_BY_EMAIL, param, USER_ROW_MAPPER);
-		if (userList.isEmpty()) {
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+		try {
+			return template.queryForObject(SELECT_USER_BY_EMAIL, param, USER_ROW_MAPPER);
+		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
-		return userList.get(0);
 	}
-
-   	
 }
+

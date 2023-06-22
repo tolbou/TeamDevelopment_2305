@@ -14,18 +14,19 @@ import lombok.Data;
 @Table(name = "users")
 public class LoginUserEntity {
 	
-	@Column(name = "password")
-	private String password;
-
-	@Column(name = "email")
-	private String email;
 	@Id
 	@Column(name = "id")
 	private  Integer id;
-
+	
 	@Column(name = "username")
 	private String username;
 	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "password")
+	private String password;
+
 	@Column(name = "created_at")
 	private Timestamp created_at;
 	
